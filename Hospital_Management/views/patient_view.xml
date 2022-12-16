@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="view_hospital_patient_tree" model="ir.ui.view">
         <field name="name">hospital.patient.tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="Name" string="Patient Name"/>
-                <field name="Mobile"/>
-                <field name="Description"/>
-                <field name="Age"/>
-                <field name="Gender"/>
+                <field name="name" string="Patient Name"/>
+                <field name="mobile"/>
+                <field name="description"/>
+                <field name="age"/>
+                <field name="gender"/>
             </tree>
         </field>
     </record>
@@ -23,17 +22,23 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="Name"/>
-                            <field name="Mobile"/>
-                            <field name="Description"/>
+                            <field name="name"/>
+                            <field name="mobile"/>
+                            <field name="description"/>
                         </group>
                         <group>
-                            <field name="Age"/>
-                            <field name="Gender"/>
+                            <field name="age"/>
+                            <field name="gender"/>
                             <field name="active" invisible="1"/>
                         </group>
                     </group>
                 </sheet>
+                <!-- chatter_position -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
@@ -43,20 +48,23 @@
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <search>
-                <field name="Name" string="Patient Name"
-                       filter_domain="['|',('Name','ilike',self),('Mobile','ilike',self)]"/>
-                <field name="Mobile"/>
-                <field name="Age"/>
-                <field name="Gender"/>
-                <filter name="filter_male" string="Male" domain="[('Gender','=','male')]"/>
-                <filter name="filter_female" string="Female" domain="[('Gender','=','female')]"/>
+                <field name="name" string="Patient Name"
+                       filter_domain="['|',('name','ilike',self),('mobile','ilike',self)]"/>
+                <field name="mobile"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <filter name="filter_male" string="Male" domain="[('gender','=','male')]"/>
+                <filter name="filter_female" string="Female" domain="[('gender','=','female')]"/>
                 <separator/>
-                <filter name="filter_kids" string="kids" domain="[('Age','&lt;=',5)]"/>
+                <filter name="filter_kids" string="kids" domain="[('age','&lt;=',5)]"/>
                 <separator/>
                 <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
                 <group expand="0" string="Group By">
-                    <filter string="Gender" name="group_by_gender" context="{'group_by':'Gender'}"/>
+                    <filter string="Gender" name="group_by_gender" context="{'group_by':'gender'}"/>
                 </group>
+                <searchpanel>
+                    <field name="gender" icon="fa-users" select="multi" enable_counters="1"/>
+                </searchpanel>
             </search>
         </field>
     </record>

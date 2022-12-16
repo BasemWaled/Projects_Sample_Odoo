@@ -3,11 +3,12 @@ from odoo import api, fields, models
 
 class Hospitalpatient(models.Model):
     _name = "hospital.patient"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Hospital patient"
 
-    Name = fields.Char(string='Name')
-    Mobile = fields.Char(string='Mobile')
-    Age = fields.Integer(string='Age')
-    Gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string="Gender")
-    Description = fields.Text(string='Description')
+    name = fields.Char(string='Name', tracking=True)
+    mobile = fields.Char(string='Mobile', tracking=True)
+    age = fields.Integer(string='Age', tracking=True)
+    gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string="Gender", tracking=True, default='female')
+    description = fields.Text(string='Description', tracking=True)
     active = fields.Boolean(string='active', default=True)

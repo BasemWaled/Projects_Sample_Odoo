@@ -5,11 +5,12 @@
         <field name="model">project.name</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="Project_Name" string="Project_Name"/>
+                <field name="Project_Name" string="Project Name"/>
                 <field name="Url"/>
                 <field name="UserName"/>
                 <field name="Password"/>
                 <field name="Project_Type"/>
+                <field name="version"/>
             </tree>
         </field>
     </record>
@@ -29,6 +30,7 @@
                         <group>
                             <field name="UserName"/>
                             <field name="Password"/>
+                            <field name="version"/>
                             <field name="active" invisible="1"/>
                         </group>
                     </group>
@@ -52,6 +54,7 @@
                 <field name="Url"/>
                 <field name="UserName"/>
                 <field name="Project_Type"/>
+                <field name="version"/>
                 <filter name="filter_community" string="Community" domain="[('Project_Type','=','community')]"/>
                 <filter name="filter_enterprise" string="Enterprise" domain="[('Project_Type','=','enterprise')]"/>
                 <filter name="filter_archived" string="Archived" domain="[('active','=',False)]"/>
@@ -70,7 +73,7 @@
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create your first link project!
+                Create your first URL project!
             </p>
         </field>
     </record>
