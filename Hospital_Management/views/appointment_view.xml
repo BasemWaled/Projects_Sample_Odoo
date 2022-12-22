@@ -16,17 +16,34 @@
         <field name="name">hospital.appointment.form</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
-            <form>
+            <form>  <!--<form create="0" delete="0" edit="0">-->
+                <header>
+                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable': '1'}" statusbar_visible="draft,in_consultation,done"/>
+                </header>
                 <sheet>
+                    <div>
+                        <h1>
+                            <field name="priority" widget="priority"/>
+                        </h1>
+                    </div>
                     <group>
                         <group>
                             <field name="patient_id" string="Patient Name"/>
+                            <field name="gender"/>
                             <field name="appointment_time" string="Appointment Time"/>
                         </group>
                         <group>
                             <field name="booking_date" string="Booking Date"/>
+                            <field name="description"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="prescription" name="prescription">
+                            <field name="prescription" placeholder="enter your prescription"/>
+                        </page>
+                        <page string="Pharmacy" name="Pharmacy">
+                        </page>
+                    </notebook>
                 </sheet>
                 <!-- chatter_position -->
                 <div class="oe_chatter">
