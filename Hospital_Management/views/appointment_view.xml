@@ -35,6 +35,8 @@
                         <group>
                             <field name="booking_date" string="Booking Date"/>
                             <field name="description"/>
+                            <button name="action_test" string="Object Button" type="object" confirm="Are you sure to execute python code ?" class="oe_highlight"/>
+                            <button name="%(Hospital_Management.action_hospital_patient)d" string="Action Button" help="on clicking this button, you will be redirected to patients records" type="action" confirm="Are you sure to do that" class="oe_highlight"/>
                         </group>
                     </group>
                     <notebook>

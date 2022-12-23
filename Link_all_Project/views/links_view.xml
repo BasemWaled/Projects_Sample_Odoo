@@ -15,36 +15,6 @@
         </field>
     </record>
 
-    <record id="view_project_name_form" model="ir.ui.view">
-        <field name="name">project.name.form</field>
-        <field name="model">project.name</field>
-        <field name="arch" type="xml">
-            <form>
-                <sheet>
-                    <group>
-                        <group>
-                            <field name="project_Name"/>
-                            <field name="url"/>
-                            <field name="project_Type"/>
-                        </group>
-                        <group>
-                            <field name="userName"/>
-                            <field name="password"/>
-                            <field name="version"/>
-                            <field name="active" invisible="1"/>
-                        </group>
-                    </group>
-                </sheet>
-                <!-- chatter_position -->
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" groups="base.group_user"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div>
-            </form>
-        </field>
-    </record>
-
     <record id="view_project_name_search" model="ir.ui.view">
         <field name="name">project.name.search</field>
         <field name="model">project.name</field>
@@ -78,11 +48,11 @@
         </field>
     </record>
 
-    <menuitem id="menu_links"
-              name="links"
-              action="action_project_name"
-              parent="menu_links_master"
-              sequence="0"/>
 
+    <menuitem id="url_systems"
+              name="URL Systems"
+              action="action_project_name"
+              parent="project.menu_project_config"
+              sequence="0"/>
 
 </odoo>

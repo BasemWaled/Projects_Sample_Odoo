@@ -11,7 +11,7 @@ class HospitalAppointment(models.Model):
     gender = fields.Selection(related='patient_id.gender', readonly=False)
     appointment_time = fields.Datetime(string='Appointment Time', default=fields.Datetime.now)
     booking_date = fields.Date(string='Booking Date', default=fields.Date.context_today)
-    description = fields.Text(string='Description')
+    description = fields.Text(string='Description', help="Description of the patient from patient record")
     prescription = fields.Html(string='prescription')
     priority = fields.Selection([
         ('0', 'Normal'),
@@ -27,3 +27,6 @@ class HospitalAppointment(models.Model):
     @api.onchange('patient_id')
     def onchange_patient_id(self):
         self.description = self.patient_id.description
+
+    def action_test(self):
+        print("hallo")
