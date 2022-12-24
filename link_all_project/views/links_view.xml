@@ -8,7 +8,7 @@
                 <field name="project_Name" string="Project Name"/>
                 <field name="url"/>
                 <field name="userName"/>
-                <field name="password"/>
+                <field name="password" optional="show"/>
                 <field name="project_Type"/>
                 <field name="version"/>
             </tree>
@@ -39,7 +39,7 @@
         <field name="name">links</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">project.links</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
