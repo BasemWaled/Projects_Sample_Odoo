@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hospital_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id" string="Patient Name"/>
+                <field name="appointment_time" string="Appointment Time"/>
+                <field name="booking_date" string="Booking Date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hospital_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form>  <!--<form create="0" delete="0" edit="0">-->
+                <header>
+                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable': '1'}" statusbar_visible="draft,in_consultation,done"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h1>
+                            <field name="priority" widget="priority"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id" string="Patient Name"/>
+                            <field name="gender"/>
+                            <field name="appointment_time" string="Appointment Time"/>
+                        </group>
+                        <group>
+                            <field name="booking_date" string="Booking Date"/>
+                            <field name="description"/>
+                            <button name="action_test" string="Object Button" type="object" confirm="Are you sure to execute python code ?" class="oe_highlight"/>
+                            <button name="%(Hospital_Management.action_hospital_patient)d" string="Action Button" help="on clicking this button, you will be redirected to patients records" type="action" confirm="Are you sure to do that" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="prescription" name="prescription">
+                            <field name="prescription" placeholder="enter your prescription"/>
+                        </page>
+                        <page string="Pharmacy" name="Pharmacy">
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- chatter_position -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_appointment_search" model="ir.ui.view">
+        <field name="name">hospital.appointment.search</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <search>
+            </search>
+        </field>
+    </record>
+    <record id="action_hospital_Appointment" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Appointment!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_appointment"
+              name="Appointment"
+              action="action_hospital_Appointment"
+              parent="menu_appointment_master"
+              sequence="10"/>
+
+</odoo>
