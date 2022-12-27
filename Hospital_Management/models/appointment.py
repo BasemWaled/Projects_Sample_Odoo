@@ -33,7 +33,7 @@ class HospitalAppointment(models.Model):
         return {
             'effect': {
                 'fadeout': 'slow',
-                'message': 'Click Successfull',
+                'message': 'Click Successfully',
                 'type': 'rainbow_man',
             }
         }
