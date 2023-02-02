@@ -18,7 +18,14 @@
         <field name="arch" type="xml">
             <form>  <!--<form create="0" delete="0" edit="0">-->
                 <header>
-                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable': '1'}" statusbar_visible="draft,in_consultation,done"/>
+                    <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"
+                            states="draft"/>
+                    <button name="action_done" string="Mark AS Done" class="oe_highlight" type="object"
+                            states="in_consultation"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="draft, in_consultation"/>
+                    <button name="action_draft" string="Reset To Draft" type="object" states="cancel,draft"/>
+                    <!--options="{'clickable': '1'}"-->
+                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,in_consultation,done"/>
                 </header>
                 <sheet>
                     <div>
@@ -30,13 +37,21 @@
                         <group>
                             <field name="patient_id" string="Patient Name"/>
                             <field name="gender"/>
+                            <field name="doctor_id"/>
                             <field name="appointment_time" string="Appointment Time"/>
                         </group>
                         <group>
+                            <field name="hide_sales_price"
+                                   groups="base.group_no_one"/> <!-- groups="base.group_no_one" show only in developer mode-->
                             <field name="booking_date" string="Booking Date"/>
                             <field name="description"/>
-                            <button name="action_test" string="Object Button" type="object" confirm="Are you sure to execute python code ?" class="oe_highlight"/>
-                            <button name="%(Hospital_Management.action_hospital_patient)d" string="Action Button" help="on clicking this button, you will be redirected to patients records" type="action" confirm="Are you sure to do that" class="oe_highlight"/>
+                            <button name="action_test" string="Object Button" type="object"
+                                    confirm="Are you sure to execute python code ?" class="oe_highlight"
+                                    groups="base.group_no_one"/>
+                            <button name="%(Hospital_Management.action_hospital_patient)d" string="Action Button"
+                                    help="on clicking this button, you will be redirected to patients records"
+                                    type="action" confirm="Are you sure to do that" class="oe_highlight"
+                                    groups="base.group_no_one"/>
                         </group>
                     </group>
                     <notebook>
@@ -44,6 +59,22 @@
                             <field name="prescription" placeholder="enter your prescription"/>
                         </page>
                         <page string="Pharmacy" name="Pharmacy">
+                            <field name="appointment_pharmacy_ines">
+                                <tree editable="bottom">  <!--editable="top"-->
+                                    <field name="product_id"/>
+                                    <field name="price_unit"
+                                           attrs="{'column_invisible':[('parent.hide_sales_price', '=', True)]}"/>
+                                    <field name="qty"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="product_id"/>
+                                        <field name="price_unit"
+                                               attrs="{'column_invisible':[('parent.hide_sales_price', '=', True)]}"/>
+                                        <field name="qty"/>
+                                    </group>
+                                </form>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
