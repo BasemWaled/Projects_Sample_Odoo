@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models
 
 
 class ModelName(models.Model):
@@ -6,4 +6,6 @@ class ModelName(models.Model):
     _description = 'Patient Tag'
 
     name = fields.Char(string='Name', required=True)
-    active = fields.Boolean(string="Active", default=True)
+    active = fields.Boolean(string='Active', default=True)
+    color = fields.Integer(string='color')
+    color_2 = fields.Char(string='color 2')
