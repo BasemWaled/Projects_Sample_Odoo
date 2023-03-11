@@ -35,3 +35,13 @@ class Hospitalpatient(models.Model):
             if rec.date_of_birth and rec.date_of_birth > fields.Date.today():
                 raise ValidationError('the Birthday you enter not allow ')
                 return
+
+
+class ModelName(models.Model):
+    _name = 'patient.tag'
+    _description = 'Patient Tag'
+
+    name = fields.Char(string='Name', required=True)
+    active = fields.Boolean(string='Active', default=True)
+    color = fields.Integer(string='color')
+    color_2 = fields.Char(string='color 2')
