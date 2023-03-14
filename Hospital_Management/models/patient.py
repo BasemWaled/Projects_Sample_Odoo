@@ -20,6 +20,11 @@ class Hospitalpatient(models.Model):
     image = fields.Image(string="Image")
     tag_ids = fields.Many2many('patient.tag', string='Tags')
 
+    @api.model
+    def create(self, vals):
+        print("basem", vals)
+        return super(Hospitalpatient, self).create(vals)
+
     @api.depends('date_of_birth')
     def _compute_age(self):
         for rec in self:
@@ -45,3 +50,14 @@ class ModelName(models.Model):
     active = fields.Boolean(string='Active', default=True)
     color = fields.Integer(string='color')
     color_2 = fields.Char(string='color 2')
+
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    confirmed_user_id = fields.Many2one('res.users', string="Confirm Users")
+
+    def action_confirm(self):
+        super(SaleOrder, self).action_confirm()
+        print("Success..........")
+        self.confirmed_user_id = self.env.user.id
