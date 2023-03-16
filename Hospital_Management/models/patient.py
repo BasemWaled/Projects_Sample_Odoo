@@ -15,6 +15,7 @@ class Hospitalpatient(models.Model):
     gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string="Gender", tracking=True,
                               default='female')
     description = fields.Text(string='Description', tracking=True)
+    ref = fields.Char(string='Internal Reference', tracking=True)
     active = fields.Boolean(string='active', default=True)
     appointment_id = fields.Many2one('hospital.appointment', string='Appointment')
     image = fields.Image(string="Image")
@@ -22,8 +23,13 @@ class Hospitalpatient(models.Model):
 
     @api.model
     def create(self, vals):
-        print("basem", vals)
+        vals['ref'] = self.env['ir.sequence'].next_by_code('hospital.patient')
         return super(Hospitalpatient, self).create(vals)
+
+    def write(self, vals):
+        if not self.ref and not vals.get('ref'):
+            vals['ref'] = self.env['ir.sequence'].next_by_code('hospital.patient')
+        return super(Hospitalpatient, self).write(vals)
 
     @api.depends('date_of_birth')
     def _compute_age(self):

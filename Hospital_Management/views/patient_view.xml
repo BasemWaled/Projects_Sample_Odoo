@@ -26,6 +26,7 @@
                             <field name="name"/>
                             <field name="mobile"/>
                             <field name="description"/>
+                            <field name="ref"/>
                         </group>
                         <group>
                             <field name="date_of_birth"/>
