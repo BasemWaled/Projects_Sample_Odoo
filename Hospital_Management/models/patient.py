@@ -38,7 +38,7 @@ class Hospitalpatient(models.Model):
             if rec.date_of_birth:
                 rec.age = today.year - (rec.date_of_birth.year + 1)
             else:
-                rec.age = "No Date Of Birth!!"
+                rec.age = 1
 
     @api.constrains('date_of_birth')
     def _check_date_of_birth(self):

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_clinic_patient" model="ir.sequence">
+        <field name="name">Clinic Patient</field>
+        <field name="code">clinic.patient</field>
+        <field name="prefix">CL</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_clinic_appointment" model="ir.sequence">
+            <field name="name">Clinic Appointment</field>
+            <field name="code">clinic.appointment</field>
+            <field name="prefix">APT</field>
+            <field name="padding">0</field>
+        </record>
+</odoo>

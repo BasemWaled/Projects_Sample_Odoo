@@ -8,24 +8,6 @@ class Clinic_patient(models.Model):
     _name = 'clinic.patient'
     _description = 'Clinic Patient'
 
-    patient_id = fields.Many2one('res.partner', domain=[('is_patient', '=', True)], string="Patient", required=True)
-    ref = fields.Char(string='ID', readonly=True)
-    date_of_birth = fields.Date(string="Date of Birth")
-    sex = fields.Selection([('m', 'Male'), ('f', 'Female')], string="Sex")
-    age = fields.Char(compute=onchange_age, string="Patient Age", store=True)
-    critical_info = fields.Text(string="Patient Critical Information")
-    photo = fields.Binary(string="Picture")
-    marital_status = fields.Selection(
-        [('s', 'Single'), ('m', 'Married'), ('w', 'Widowed'), ('d', 'Divorced'), ('x', 'Seperated')],
-        string='Marital Status')
-
-    street = fields.Char(related='patient_id.street', readonly=False)
-    street2 = fields.Char(related='patient_id.street2', readonly=False)
-    zip_code = fields.Char(related='patient_id.zip', readonly=False)
-    city = fields.Char(related='patient_id.city', readonly=False)
-    state_id = fields.Many2one("res.country.state", related='patient_id.state_id', readonly=False)
-    country_id = fields.Many2one('res.country', related='patient_id.country_id', readonly=False)
-
     @api.depends('date_of_birth')
     def onchange_age(self):
         for rec in self:
@@ -37,6 +19,26 @@ class Clinic_patient(models.Model):
             else:
                 rec.age = "No Date Of Birth!!"
 
+    patient_id = fields.Many2one('res.partner', string="Patient Name", required=True)
+    ref = fields.Char(string='ID', readonly=True)
+    date_of_birth = fields.Date(string="Date of Birth")
+    sex = fields.Selection([('m', 'Male'), ('f', 'Female')], string="Sex")
+    age = fields.Char(compute=onchange_age, string="Patient Age", store=True)
+    mobile = fields.Char(related='patient_id.mobile', string='Mobile', tracking=True, readonly=False)
+    critical_info = fields.Text(string="Patient Critical Information")
+    image = fields.Binary(string="Picture")
+    active = fields.Boolean(string='active', default=True)
+    marital_status = fields.Selection(
+        [('s', 'Single'), ('m', 'Married'), ('w', 'Widowed'), ('d', 'Divorced'), ('x', 'Seperated')],
+        string='Marital Status')
+
+    partner_address_id = fields.Many2one('res.partner', string="Address", )
+    street = fields.Char(related='patient_id.street', readonly=False)
+    street2 = fields.Char(related='patient_id.street2', readonly=False)
+    zip_code = fields.Char(related='patient_id.zip', readonly=False)
+    city = fields.Char(related='patient_id.city', readonly=False)
+    state_id = fields.Many2one("res.country.state", related='patient_id.state_id', readonly=False)
+    country_id = fields.Many2one('res.country', related='patient_id.country_id', readonly=False)
 
     @api.model
     def create(self, vals):
