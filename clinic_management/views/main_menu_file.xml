@@ -10,7 +10,7 @@
               sequence="0"/>
 
     <menuitem id="menu_appointment"
-              name="Appointments"
+              name="Appointments Details"
               parent="main_menu_clinic_management"
               sequence="20"/>
 

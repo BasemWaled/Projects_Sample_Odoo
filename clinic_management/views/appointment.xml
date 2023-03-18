@@ -74,6 +74,7 @@
                 view_mode="tree,form" domain="[('patient_id', '=', active_id)]"/>
 
     <menuitem id="menu_clinic_appointment"
+              name="Appointments"
               action="action_clinic_appointment"
               parent="menu_appointment"
               sequence="10"/>
