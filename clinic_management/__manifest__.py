@@ -14,7 +14,6 @@
         'security/ir.model.access.csv',
         'data/sequence_data.xml',
         'wizard/medical_appointments_invoice_wizard.xml',
-        'wizard/cancel_appointment_view.xml',
         'views/main_menu_file.xml',
         'views/appointment.xml',
         'views/patient.xml',

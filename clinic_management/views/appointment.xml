@@ -21,17 +21,16 @@
         <field name="arch" type="xml">
             <form string="Appointment">
                 <header>
-                    <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"
-                            states="draft"/>
-                    <!--<button name="%(Hospital_Management.action_cancel_appointment)" string="Mark AS Done" class="oe_highlight" type="object"
-                            states="in_consultation"/>-->
-                    <button name="action_cancel" string="Cancel" type="object" data-hotkey="z"
-                            states="draft, in_consultation"/>
-                    <button name="action_draft" string="Reset To Draft" type="object" states="cancel,draft"/>
-                    <!--options="{'clickable': '1'}"-->
-                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,in_consultation,done"/>
-                    <button name="%(clinic_management.action_clinic_appointments_invoice_wizard)d"
+                    <button name="%(clinic_management.action_medical_appointments_invoice_wizard)d"
                             string="Create Invoice" type="action" class="oe_highlight"/>
+                    <button id="button_in_consultation" name="action_in_consultation" string="In Consultation"
+                            class="btn-primary" type="object" states="draft"/>
+                    <button id="button_done" name="action_done" string="Done"
+                            class="btn-primary" type="object" states="in_consultation"/>
+                    <button id="button_draft" name="action_draft" string="Draft"
+                            type="object" states="done,in_consultation,cancel"/>
+                    <button id="button_cancel" name="action_cancel" string="Cancel" type="object" states="draft"/>
+                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,in_consultation,done"/>
                 </header>
                 <sheet>
                     <div class="oe_left" style="width: 500px;">
@@ -55,6 +54,7 @@
                             <field name="appointment_date"/>
                             <field name="appointment_end"/>
                             <field name="patient_status"/>
+                            <field name="no_invoice"/>-->
                             <field name="validity_status"
                                    readonly="1"/>
                         </group>

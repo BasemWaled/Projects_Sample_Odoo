@@ -9,7 +9,8 @@ class clinic_appointment(models.Model):
     _description = 'Medical Appointment'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string="Appointment ID", readonly=True, copy=True)
+    name = fields.Char(string="Appointment ID", readonly=True, copy=True,
+                       default=lambda self: self.env['ir.sequence'].next_by_code('clinic.appointment'))
     patient_id = fields.Many2one('clinic.patient', string="Patient", required=True)
     doctor_id = fields.Many2one('res.partner', 'Doctor', required=True)
     appointment_date = fields.Datetime('Appointment Date', required=True, default=fields.Datetime.now)
@@ -20,23 +21,26 @@ class clinic_appointment(models.Model):
     validity_status = fields.Selection([('invoice', 'Invoice'), ('tobe', 'To be Invoiced'), ], 'Status', sort=False,
                                        readonly=True, default='tobe')
     comments = fields.Text(string="Info")
-    state = fields.Selection(
-        [('draft', 'Draft'), ('in_consultation', 'In Consultation'), ('done', 'Done'), ('cancel', 'Cancelled')],
-        default='draft', string="Status", required=True, tracking=True)
     duration = fields.Integer('Duration')
     urgency_level = fields.Selection([('a', 'Normal'), ('b', 'Urgent'), ('c', 'Medical Emergency'), ], 'Urgency Level',
                                      sort=False, default="b")
     consultations_id = fields.Many2one('product.product', 'Consultation Service', required=True)
+    no_invoice = fields.Boolean(string='Invoice exempt', default=True)
+    state = fields.Selection(
+        [('draft', 'Draft'), ('in_consultation', 'In Consultation'), ('done', 'Done'), ('cancel', 'Cancelled')],
+        default='draft', string="Status", required=True, tracking=True)
 
-    @api.model
-    def create(self, vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code('clinic.appointment')
-        return super(clinic_appointment, self).create(vals)
+    def action_in_consultation(self):
+        self.state = 'in_consultation'
 
-    def write(self, vals):
-        if not self.ref and not vals.get('ref'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('clinic.appointment')
-        return super(clinic_appointment, self).write(vals)
+    def action_done(self):
+        self.state = 'done'
+
+    def action_draft(self):
+        self.state = 'draft'
+
+    def action_cancel(self):
+        self.state = 'cancel'
 
     def create_invoice(self):
         lab_req_obj = self.env['clinic.appointment']
@@ -58,7 +62,7 @@ class clinic_appointment(models.Model):
                  'account_id': lab_req.patient_id.patient_id.property_account_receivable_id.id, 'invoice_id': res.id})
 
             if res:
-                lab_req.write({'is_invoiced': True})
+                lab_req.write({'is_invoiced': False})
                 imd = self.env['ir.model.data']
                 action = self.env.ref('account.action_invoice_tree1')
                 list_view_id = imd.sudo()._xmlid_to_res_id('account.view_order_form')
@@ -70,22 +74,3 @@ class clinic_appointment(models.Model):
         else:
             raise UserError(_(' The Appointment is invoice exempt'))
         return result
-
-    def action_in_consultation(self):
-        for rec in self:
-            rec.state = 'in_consultation'
-
-    def action_done(self):
-        for rec in self:
-            rec.state = 'done'
-
-    def action_draft(self):
-        for rec in self:
-            rec.state = 'draft'
-
-    # def action_cancel(self):
-    #     action = self.env.ref('clinic_management.action_cancel_appointment').read()[0]
-    #     return action
-    def action_cancel(self):
-        for rec in self:
-            rec.state = 'cancel'

@@ -14,12 +14,6 @@
               parent="main_menu_clinic_management"
               sequence="20"/>
 
-    <menuitem id="menu_cancel_appointment"
-              name="Cancellation"
-              parent="menu_appointment"
-              action="action_cancel_appointment"
-              sequence="50"/>
-
     <menuitem id="menu_reports"
               name="Reports"
               parent="main_menu_clinic_management"
