@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <record id="view_clinic_appointment_tree" model="ir.ui.view">
+        <field name="name">clinic.appointment.tree</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id" string="Patient Name"/>
+                <field name="doctor_id"/>
+                <field name="appointment_date"/>
+                <field name="appointment_end"/>
+                <field name="patient_status"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
     <record id="clinic_appointment_form_view" model="ir.ui.view">
         <field name="name">clinic.appointment.form</field>
         <field name="model">clinic.appointment</field>
         <field name="arch" type="xml">
             <form string="Appointment">
                 <header>
+                    <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"
+                            states="draft"/>
+                    <!--<button name="%(Hospital_Management.action_cancel_appointment)" string="Mark AS Done" class="oe_highlight" type="object"
+                            states="in_consultation"/>-->
+                    <button name="action_cancel" string="Cancel" type="object" data-hotkey="z"
+                            states="draft, in_consultation"/>
+                    <button name="action_draft" string="Reset To Draft" type="object" states="cancel,draft"/>
+                    <!--options="{'clickable': '1'}"-->
+                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,in_consultation,done"/>
                     <button name="%(clinic_management.action_clinic_appointments_invoice_wizard)d"
                             string="Create Invoice" type="action" class="oe_highlight"/>
                 </header>
@@ -17,10 +41,12 @@
                             <h1>
                                 <field name="name" class="oe_inline"/>
                             </h1>
-                            <label for="patient_id" class="oe_edit_only"/>
-                            <field name="patient_id"
-                                   context="{'appointment_id': 'appointment'}"
-                                   options="{&quot;always_reload&quot;: 1}"/>
+                            <h3>
+                                <label for="patient_id" class="oe_edit_only"/>
+                                <field name="patient_id"
+                                       context="{'appointment_id': 'appointment'}"
+                                       options="{&quot;always_reload&quot;: 1}"/>
+                            </h3>
                         </div>
                     </div>
                     <group>

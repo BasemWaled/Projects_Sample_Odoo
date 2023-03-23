@@ -13,16 +13,10 @@ class HospitalAppointment(models.Model):
     booking_date = fields.Date(string='Booking Date', default=fields.Date.context_today)
     description = fields.Text(string='Description', help="Description of the patient from patient record")
     prescription = fields.Html(string='prescription')
-    priority = fields.Selection([
-        ('0', 'Normal'),
-        ('1', 'Low'),
-        ('2', 'High'),
-        ('3', 'Very High')], string="Priority")
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('in_consultation', 'In Consultation'),
-        ('done', 'Done'),
-        ('cancel', 'Cancelled')], default='draft', string="Status", required=True, tracking=True)
+    priority = fields.Selection([('0', 'Normal'), ('1', 'Low'), ('2', 'High'), ('3', 'Very High')], string="Priority")
+    state = fields.Selection(
+        [('draft', 'Draft'), ('in_consultation', 'In Consultation'), ('done', 'Done'), ('cancel', 'Cancelled')],
+        default='draft', string="Status", required=True, tracking=True)
     doctor_id = fields.Many2one('res.users', string='Doctor', tracking=True)
     appointment_pharmacy_ines = fields.One2many('appointment.pharmacy.lines', 'appointment_id', string='Pharmacy Lines')
     hide_sales_price = fields.Boolean(string="Hide Sales Price")
@@ -33,13 +27,7 @@ class HospitalAppointment(models.Model):
 
     def action_test(self):
         print("hallo")
-        return {
-            'effect': {
-                'fadeout': 'slow',
-                'message': 'Click Successfully',
-                'type': 'rainbow_man',
-            }
-        }
+        return {'effect': {'fadeout': 'slow', 'message': 'Click Successfully', 'type': 'rainbow_man', }}
 
     def action_in_consultation(self):
         for rec in self:
@@ -49,13 +37,13 @@ class HospitalAppointment(models.Model):
         for rec in self:
             rec.state = 'done'
 
-    def action_cancel(self):
-        action = self.env.ref('Hospital_Management.action_cancel_appointment').read()[0]
-        return action
-
     def action_draft(self):
         for rec in self:
             rec.state = 'draft'
+
+    def action_cancel(self):
+        action = self.env.ref('Hospital_Management.action_cancel_appointment').read()[0]
+        return action
 
 
 class AppointmentPharmacyLines(models.Model):

@@ -7,6 +7,7 @@ from odoo.exceptions import UserError, ValidationError
 class Clinic_patient(models.Model):
     _name = 'clinic.patient'
     _description = 'Clinic Patient'
+    _rec_name = 'patient_id'
 
     @api.depends('date_of_birth')
     def onchange_age(self):
@@ -24,7 +25,7 @@ class Clinic_patient(models.Model):
     date_of_birth = fields.Date(string="Date of Birth")
     sex = fields.Selection([('m', 'Male'), ('f', 'Female')], string="Sex")
     age = fields.Char(compute=onchange_age, string="Patient Age", store=True)
-    mobile = fields.Char(related='patient_id.mobile', string='Mobile', tracking=True, readonly=False)
+    mobile = fields.Char(related='patient_id.mobile', string='Mobile', tracking=True, readonly=False, required=True)
     critical_info = fields.Text(string="Patient Critical Information")
     image = fields.Binary(string="Picture")
     active = fields.Boolean(string='active', default=True)
