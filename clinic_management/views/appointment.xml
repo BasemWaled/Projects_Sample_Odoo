@@ -21,8 +21,6 @@
         <field name="arch" type="xml">
             <form string="Appointment">
                 <header>
-                    <button name="%(clinic_management.action_medical_appointments_invoice_wizard)d"
-                            string="Create Invoice" type="action" class="oe_highlight"/>
                     <button id="button_in_consultation" name="action_in_consultation" string="In Consultation"
                             class="btn-primary" type="object" states="draft"/>
                     <button id="button_done" name="action_done" string="Done"
@@ -54,7 +52,6 @@
                             <field name="appointment_date"/>
                             <field name="appointment_end"/>
                             <field name="patient_status"/>
-                            <field name="no_invoice"/>-->
                             <field name="validity_status"
                                    readonly="1"/>
                         </group>
