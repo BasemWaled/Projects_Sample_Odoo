@@ -28,6 +28,8 @@
                     <button id="button_draft" name="action_draft" string="Draft"
                             type="object" states="done,in_consultation,cancel"/>
                     <button id="button_cancel" name="action_cancel" string="Cancel" type="object" states="draft"/>
+                    <button name="%(clinic_management.action_medical_appointments_invoice_wizard)d"
+                            string="Create Invoice" type="action" class="oe_highlight"/>
                     <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,in_consultation,done"/>
                 </header>
                 <sheet>

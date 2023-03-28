@@ -11,5 +11,11 @@
             <field name="code">clinic.appointment</field>
             <field name="prefix">APT</field>
             <field name="padding">0</field>
-        </record>
+    </record>
+     <record id="clinic_appointments_invoice_sequence" model="ir.sequence">
+            <field name="name">clinic Appointments Invoice</field>
+            <field name="code">c</field>
+            <field name="prefix">MED/INV/</field>
+            <field name="padding">4</field>
+     </record>
 </odoo>
