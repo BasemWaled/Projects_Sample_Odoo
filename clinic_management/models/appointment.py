@@ -40,3 +40,5 @@ class clinic_appointment(models.Model):
 
     def action_cancel(self):
         self.state = 'cancel'
+
+

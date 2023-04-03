@@ -30,6 +30,7 @@
                     <button id="button_cancel" name="action_cancel" string="Cancel" type="object" states="draft"/>
                     <button name="%(clinic_management.action_medical_appointments_invoice_wizard)d"
                             string="Create Invoice" type="action" class="oe_highlight"/>
+                    <!--                    <button name="create_invoice" string="Create Invoice" type="object" class="btn-primary"/>-->
                     <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,in_consultation,done"/>
                 </header>
                 <sheet>
