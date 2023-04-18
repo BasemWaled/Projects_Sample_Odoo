@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <record id="view_cancel_appointment_form" model="ir.ui.view">
             <field name="name">cancel.appointment.wizard.form</field>
             <field name="model">cancel.appointment.wizard</field>
