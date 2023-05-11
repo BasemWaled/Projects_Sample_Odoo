@@ -1,5 +1,6 @@
-from odoo import api, fields, models
 from datetime import date
+
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -45,7 +46,15 @@ class Hospitalpatient(models.Model):
         for rec in self:
             if rec.date_of_birth and rec.date_of_birth > fields.Date.today():
                 raise ValidationError('the Birthday you enter not allow ')
-                return
+
+    # def name_get(self):
+    #     patient_list = []
+    #     for rec in self:
+    #         name = str(rec.ref) + ' ' + rec.name
+    #         patient_list.append((rec.id, name))
+    #     return patient_list
+    def name_get(self):
+        return [(rec.id, "[%s] %s" % (rec.ref, rec.name)) for rec in self]
 
 
 class ModelName(models.Model):
