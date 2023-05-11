@@ -11,7 +11,7 @@ class Hospitalpatient(models.Model):
 
     name = fields.Char(string='Name', tracking=True)
     date_of_birth = fields.Date(string='Date of Birth')
-    mobile = fields.Char(string='Mobile', tracking=True)
+    mobile = fields.Char(string='Mobile', tracking=True, size=11)
     age = fields.Integer(string='Age', compute='_compute_age', tracking=True)
     gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string="Gender", tracking=True,
                               default='female')
