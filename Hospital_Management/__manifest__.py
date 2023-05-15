@@ -16,6 +16,7 @@
              'data/sequence_data.xml',
              'wizard/cancel_appointment_view.xml',
              'views/menu.xml',
+             'views/odoo_playground.xml',
              'views/patient_view.xml',
              'views/female_view.xml',
              'views/appointment_view.xml',
