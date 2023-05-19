@@ -24,9 +24,11 @@
              'reports/report.xml',
              'reports/patient_card.xml'],
     'demo': [],
+    'assets': {
+        'web.assets_backend': ['Hospital_Management/static/src/js/js_sample.js'],
+    },
     'application': True,
     'installable': True,
     'auto_install': False,
-    'assets': {},
     'license': 'LGPL-3',
 }
