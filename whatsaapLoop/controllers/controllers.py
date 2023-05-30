@@ -27,24 +27,33 @@ class WhatsAppLoop(http.Controller):
         response = {'status': 200, 'response': data, 'message': "Successfully fetched data from CRM"}
         return response
 
-    @http.route('/create_crm', type='json', auth='public')
+    @http.route('/create_crm1', type='json', auth='public')
     def create_crm(self, **rec):
         if rec.get('contact_name') and rec.get('phone') and rec.get('name'):
-            vals2 = {
-                'name': rec['contact_name'],
-            }
-            partner = request.env['res.partner'].sudo().create(vals2)
+            existing_partner = request.env['res.partner'].sudo().search([
+                ('name', '=', rec['contact_name']),
+                ('phone', '=', rec['phone'])
+            ])
+            if existing_partner:
+                print("Partner with the same name and phone already exists.")
+                partner = existing_partner[0]
+            else:
+                vals2 = {
+                    'name': rec['contact_name'],
+                    'phone': rec['phone']
+                }
+                partner = request.env['res.partner'].sudo().create(vals2)
+
             vals1 = {
                 'phone': rec['phone'],
                 'name': rec['name'],
-                'partner_id': partner.id,
-                'email_from': rec['email_from']
+                'partner_id': partner.id
             }
             new_crm = request.env['crm.lead'].sudo().create(vals1)
             args = {'success': True, 'message': 'Successfully created a new CRM Lead', 'id': new_crm.id}
             return args
         else:
-            args = {'success': False, 'message': 'Contact name and phone are required fields'}
+            args = {'success': False, 'message': 'Contact name, phone, and name are required fields'}
             return args
 
 # ______________________________________________________________________________________________________________________
@@ -90,4 +99,15 @@ class WhatsAppLoop(http.Controller):
 #         args = {'success': True, 'message': 'Success created new patient', 'id': new_patient.id}
 #         return args
 
-
+# @http.route('/create_patient_basem', type='json', auth='user')
+# def create_patient(self, **rec):
+#     if request.jsonrequest:
+#         print("rec", rec)
+#         vals = {}
+#         if 'invoice_partner_display_name' in rec:
+#             vals['invoice_partner_display_name'] = rec['invoice_partner_display_name']
+#
+#         new_patient = request.env['account.move'].sudo().create(vals)
+#         print("New Patient Is ", new_patient)
+#         args = {'success': True, 'message': 'Successfully created a new patient', 'id': new_patient.id}
+#     return args
