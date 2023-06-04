@@ -4,7 +4,7 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
-class Hospitalpatient(models.Model):
+class HospitalPatient(models.Model):
     _name = "hospital.patient"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Hospital patient"
@@ -25,12 +25,12 @@ class Hospitalpatient(models.Model):
     @api.model
     def create(self, vals):
         vals['ref'] = self.env['ir.sequence'].next_by_code('hospital.patient')
-        return super(Hospitalpatient, self).create(vals)
+        return super(HospitalPatient, self).create(vals)
 
     def write(self, vals):
         if not self.ref and not vals.get('ref'):
             vals['ref'] = self.env['ir.sequence'].next_by_code('hospital.patient')
-        return super(Hospitalpatient, self).write(vals)
+        return super(HospitalPatient, self).write(vals)
 
     @api.depends('date_of_birth')
     def _compute_age(self):

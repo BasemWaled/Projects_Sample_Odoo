@@ -41,9 +41,15 @@
                 <header>
                     <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"
                             states="draft"/>
-                    <!--<button name="%(Hospital_Management.action_cancel_appointment)" string="Mark AS Done" class="oe_highlight" type="object"
-                            states="in_consultation"/>-->
-                    <button name="action_cancel" string="Cancel" type="object" data-hotkey="z" states="draft, in_consultation"/>
+                    <!--                    <button name="%(Hospital_Management.action_cancel_appointment)d" string="Cancel" data-hotkey="z"-->
+                    <!--                            context="{'default_appointment_id': active_id}"-->
+                    <!--                            type="action"-->
+                    <!--                            states="draft, in_consultation"/>-->
+                    <button name="%(Hospital_Management.action_cancel_appointment)d" string="Cancel" data-hotkey="z"
+                            type="action"
+                            context="{'hide_appointment': 1}"
+                            states="draft, in_consultation"/>
+                    <!--                    <button name="action_cancel" string="Cancel" type="object" data-hotkey="z" states="draft, in_consultation"/>-->
                     <button name="action_draft" string="Reset To Draft" type="object" states="cancel,draft"/>
                     <!--options="{'clickable': '1'}"-->
                     <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,in_consultation,done"/>
