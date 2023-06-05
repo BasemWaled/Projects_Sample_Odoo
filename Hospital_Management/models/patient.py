@@ -1,6 +1,5 @@
 from datetime import date
-
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
@@ -45,7 +44,7 @@ class HospitalPatient(models.Model):
     def _check_date_of_birth(self):
         for rec in self:
             if rec.date_of_birth and rec.date_of_birth > fields.Date.today():
-                raise ValidationError('the Birthday you enter not allow ')
+                raise ValidationError('The Birthday you enter not allow ')
 
     # def name_get(self):
     #     patient_list = []
@@ -65,6 +64,12 @@ class ModelName(models.Model):
     active = fields.Boolean(string='Active', default=True)
     color = fields.Integer(string='color')
     color_2 = fields.Char(string='color 2')
+    sequence = fields.Integer(string="Sequence")
+
+    sql_constraints = [
+        ('unique_tag_name', 'unique (name, active)', 'Name must be unique.'),
+        ('check_sequence', 'check (sequence > 0)', 'sequence must be non zero positive number.')
+    ]
 
 
 class SaleOrder(models.Model):
