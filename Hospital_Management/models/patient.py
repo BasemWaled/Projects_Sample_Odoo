@@ -56,7 +56,7 @@ class HospitalPatient(models.Model):
         return [(rec.id, "[%s] %s" % (rec.ref, rec.name)) for rec in self]
 
 
-class ModelName(models.Model):
+class PatientTag(models.Model):
     _name = 'patient.tag'
     _description = 'Patient Tag'
 
@@ -65,6 +65,15 @@ class ModelName(models.Model):
     color = fields.Integer(string='color')
     color_2 = fields.Char(string='color 2')
     sequence = fields.Integer(string="Sequence")
+
+    @api.returns('self', lambda value: value.id)
+    def copy(self, default=None):
+        if default is None:
+            default = {}
+            
+        if not default.get('name'):
+            default["name"] = _("%s (copy)", self.name)
+        return super(PatientTag, self).copy(default)
 
     sql_constraints = [
         ('unique_tag_name', 'unique (name, active)', 'Name must be unique.'),
