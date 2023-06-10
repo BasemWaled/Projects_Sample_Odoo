@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class HospitalAppointment(models.Model):
@@ -44,6 +45,11 @@ class HospitalAppointment(models.Model):
     def action_cancel(self):
         action = self.env.ref('Hospital_Management.action_cancel_appointment').read()[0]
         return action
+
+    def unlink(self):
+        if self.state != 'draft':
+            raise ValidationError(_("you can't delete because this appointment is done"))
+        return super(HospitalAppointment, self).unlink()
 
 
 class AppointmentPharmacyLines(models.Model):

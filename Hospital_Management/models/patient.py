@@ -20,6 +20,13 @@ class HospitalPatient(models.Model):
     appointment_id = fields.Many2one('hospital.appointment', string='Appointment')
     image = fields.Image(string="Image")
     tag_ids = fields.Many2many('patient.tag', string='Tags')
+    appointment_count = fields.Integer(string="Appointment Count", compute='_compute_appointment_count', store=True)
+    appointment_ids = fields.One2many('hospital.appointment', 'patient_id', string="Appointment")
+
+    @api.depends('appointment_ids')
+    def _compute_appointment_count(self):
+        for rec in self:
+            rec.appointment_count = self.env['hospital.appointment'].search_count([('patient_id', '=', rec.id)])
 
     @api.model
     def create(self, vals):
@@ -70,7 +77,7 @@ class PatientTag(models.Model):
     def copy(self, default=None):
         if default is None:
             default = {}
-            
+
         if not default.get('name'):
             default["name"] = _("%s (copy)", self.name)
         return super(PatientTag, self).copy(default)
