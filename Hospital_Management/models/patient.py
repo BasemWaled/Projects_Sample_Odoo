@@ -55,7 +55,14 @@ class HospitalPatient(models.Model):
     def _check_date_of_birth(self):
         for rec in self:
             if rec.date_of_birth and rec.date_of_birth > fields.Date.today():
-                raise ValidationError('The Birthday you enter not allow ')
+                raise ValidationError(_('The Birthday you enter not allow '))
+
+    @api.ondelete(at_uninstall=True)
+    def _check_appointments(self):
+        for rec in self:
+            if rec.appointment_ids:
+                print('error')
+                raise ValidationError(_('You cannot delete a patient with appointments !'))
 
     # def name_get(self):
     #     patient_list = []
