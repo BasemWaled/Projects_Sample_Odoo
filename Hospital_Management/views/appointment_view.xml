@@ -24,11 +24,23 @@
         <field name="name">hospital.appointment.tree</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-success="state == 'done'" decoration-danger="state == 'cancel'" sample="1" multi_edit="1"
+                  export_xlsx="0">
+                <header>
+                    <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"/>
+                </header>
                 <field name="patient_id" string="Patient Name"/>
                 <field name="appointment_time" string="Appointment Time"/>
                 <field name="booking_date" string="Booking Date"/>
-                <field name="state" widget="badge"/>
+                <field name="state" widget="badge" decoration-success="state== 'done'"
+                       decoration-info="state == 'draft'"
+                       decoration-danger="state == 'cancel'"
+                       decoration-warning="state == 'in_consultation'"
+                />
+                <button name="action_done" attrs="{'invisible':[('state','!=', 'in_consultation')]}" class="fa fa-check btn-success" type="object"/>
+                <button name="%(Hospital_Management.action_cancel_appointment)d" class="fa fa-times btn-danger" type="action"
+                            context="{'hide_appointment': 1}"
+                            attrs="{'invisible':[('state','not in', ('draft', 'in_consultation'))]}"/>
             </tree>
         </field>
     </record>
@@ -41,6 +53,8 @@
                 <header>
                     <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"
                             states="draft"/>
+                    <button name="action_done" string="Mark As Done" class="oe_highlight" data-hotkey="v" type="object"
+                            states="in_consultation"/>
                     <!--                    <button name="%(Hospital_Management.action_cancel_appointment)d" string="Cancel" data-hotkey="z"-->
                     <!--                            context="{'default_appointment_id': active_id}"-->
                     <!--                            type="action"-->

@@ -8,7 +8,8 @@ class HospitalAppointment(models.Model):
     _description = "Hospital Appointment"
     _rec_name = 'patient_id'
 
-    patient_id = fields.Many2one('hospital.patient', string='patient')
+    patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='restrict')
+    # patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='cascade')
     gender = fields.Selection(related='patient_id.gender', readonly=False)
     appointment_time = fields.Datetime(string='Appointment Time', default=fields.Datetime.now)
     booking_date = fields.Date(string='Booking Date', default=fields.Date.context_today)
@@ -32,7 +33,8 @@ class HospitalAppointment(models.Model):
 
     def action_in_consultation(self):
         for rec in self:
-            rec.state = 'in_consultation'
+            if rec.state == 'draft':
+                rec.state = 'in_consultation'
 
     def action_done(self):
         for rec in self:

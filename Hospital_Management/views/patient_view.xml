@@ -21,12 +21,19 @@
             <form>
                 <sheet>
                     <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h4>
+                            <field name="ref" readonly="1"/>
+                        </h4>
+                        <h2>
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <field name="name"/>
+                        </h2>
+                    </div>
                     <group>
                         <group>
-                            <field name="name"/>
                             <field name="mobile"/>
                             <field name="description"/>
-                            <field name="ref"/>
                         </group>
                         <group>
                             <field name="date_of_birth"/>
@@ -36,6 +43,13 @@
                             <field name="appointment_id"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Other Information" name="other_info">
+                            <field name="parent"
+                                   attrs="{'invisible':['|',('age', '&lt;=', 18),('gender', '=', 'male')]}"/>
+                            <field name="marital_states" attrs="{'invisible':[('age', '&gt;=', 18)]}"/>
+                            <field name="partner_name" attrs="{'readonly':[('marital_states', '!=', 'married')],
+                             'required': [('marital_states', '=', 'married')]}"/>
                         </group>
                     </group>
                 </sheet>
