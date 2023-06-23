@@ -41,6 +41,10 @@
                 <button name="%(Hospital_Management.action_cancel_appointment)d" class="fa fa-times btn-danger" type="action"
                             context="{'hide_appointment': 1}"
                             attrs="{'invisible':[('state','not in', ('draft', 'in_consultation'))]}"/>
+                <groupby name="patient_id">
+                    <button name="action_test1" string="Click Me" type="object" class="oe_highlight"/>
+                    <button name="edit" string="Edit" type="edit" class="oe_highlight"/>
+                </groupby>
             </tree>
         </field>
     </record>

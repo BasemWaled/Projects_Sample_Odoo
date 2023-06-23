@@ -57,6 +57,10 @@ class HospitalPatient(models.Model):
             if rec.date_of_birth and rec.date_of_birth > fields.Date.today():
                 raise ValidationError(_('The Birthday you enter not allow '))
 
+    def action_test1(self):
+        print("beso")
+        return
+
     @api.ondelete(at_uninstall=True)
     def _check_appointments(self):
         for rec in self:
