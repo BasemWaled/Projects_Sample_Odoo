@@ -5,7 +5,7 @@
         <field name="model">project.links</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
-                <field name="project_Name" string="Project Name"/>
+                <field name="project_name_id" string="Project Name"/>
                 <field name="url"/>
                 <field name="userName"/>
                 <field name="password" optional="show"/>
@@ -20,7 +20,7 @@
         <field name="model">project.links</field>
         <field name="arch" type="xml">
             <search>
-                <field name="project_Name" string="Project_Name"/>
+                <field name="project_name_id" string="Project_Name"/>
                 <field name="url"/>
                 <field name="userName"/>
                 <field name="project_Type"/>

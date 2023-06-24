@@ -1,12 +1,11 @@
 from odoo import api, fields, models
 
 
-class Linksystem(models.Model):
+class LinkSystem(models.Model):
     _name = "project.links"
-    _inherit = "project.project"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    project_Name = fields.Many2one('project.project', string='Project Name', tracking=True, required=True)
+    project_name_id = fields.Many2one('project.project', string='Project Name', tracking=True, required=True)
     url = fields.Text(string='Url', tracking=True, required=True)
     userName = fields.Char(string='UserName', tracking=True, required=True)
     password = fields.Char(string='Password', tracking=True, required=True)
