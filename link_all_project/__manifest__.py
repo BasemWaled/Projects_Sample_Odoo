@@ -10,9 +10,10 @@
     'summary': 'link_all_project',
     'description': """Link_all_Project_systems_and_admins_users""",
     'depends': ['base', 'mail', 'project'],
-    'data': ['security/ir.model.access.csv',
-             #'security/security.xml',
-            'views/links_view.xml'],
+    'data': [
+            'security/ir.model.access.csv',
+            'views/links_view.xml',
+            'views/project_view.xml'],
     'demo': [],
     'application': True,
     'installable': True,

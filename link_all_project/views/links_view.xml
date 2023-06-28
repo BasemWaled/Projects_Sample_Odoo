@@ -35,6 +35,8 @@
         </field>
     </record>
 
+
+
     <record id="action_project_links" model="ir.actions.act_window">
         <field name="name">links</field>
         <field name="type">ir.actions.act_window</field>
