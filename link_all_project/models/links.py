@@ -16,9 +16,21 @@ class LinkSystem(models.Model):
         [('10', '10'), ('11', '11'), ('12', '12'), ('13', '13'), ('14', '14'), ('15', '15'), ('16', '16')],
         tracking=True, required=True)
 
+    @api.model
+    def search(self, args, offset=0, limit=None, order=None, count=False):
+        if not self.env.user.has_group('project.group_project_manager'):
+            allowed_project_ids = self.env['project.project'].search([('user_access_ids', 'in', self.env.user.id)]).ids
+            args += [('project_name_id', 'in', allowed_project_ids)]
+        return super(LinkSystem, self).search(args, offset, limit, order, count)
+
 
 class LinkProject(models.Model):
     _inherit = 'project.project'
 
     user_access_ids = fields.Many2many('res.users', string='Project Employee', tracking=True)
 
+    @api.model
+    def search(self, args, offset=0, limit=None, order=None, count=False):
+        if not self.env.user.has_group('project.group_project_manager'):
+            args += [('user_access_ids', 'in', self.env.user.id)]
+        return super(LinkProject, self).search(args, offset, limit, order, count)
