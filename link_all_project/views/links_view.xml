@@ -4,7 +4,7 @@
         <field name="name">project.links.tree</field>
         <field name="model">project.links</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <tree editable="bottom" export_xlsx="0">
                 <field name="project_name_id" string="Project Name"/>
                 <field name="url"/>
                 <field name="userName"/>
