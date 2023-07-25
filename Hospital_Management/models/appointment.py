@@ -11,6 +11,7 @@ class HospitalAppointment(models.Model):
     patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='restrict')
     # patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='cascade')
     gender = fields.Selection(related='patient_id.gender', readonly=False)
+    ref = fields.Char(string='reference')
     appointment_time = fields.Datetime(string='Appointment Time', default=fields.Datetime.now)
     booking_date = fields.Date(string='Booking Date', default=fields.Date.context_today)
     description = fields.Text(string='Description', help="Description of the patient from patient record")

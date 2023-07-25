@@ -23,7 +23,7 @@
                     <field name="image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
                         <h4>
-                            <field name="ref" readonly="1"/>
+                            <field name="ref" readonly="1" force_save="1"/>
                         </h4>
                         <h2>
                             <label for="name" string="Name" class="oe_edit_only"/>
@@ -39,7 +39,7 @@
                             <field name="date_of_birth"/>
                             <field name="age"/>
                             <field name="appointment_count"/>
-                            <field name="gender"/>
+                            <field name="gender" widget="radio"/>
                             <field name="appointment_id"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="active" invisible="1"/>
