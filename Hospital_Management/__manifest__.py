@@ -3,7 +3,7 @@
 
 {
     'name': 'Hospital Management',
-    'version': '1.0.0',
+    'version': '15.0.0',
     'category': 'Hospital',
     'author': 'BaSeM_WaLiD',
     'sequence': -100,
