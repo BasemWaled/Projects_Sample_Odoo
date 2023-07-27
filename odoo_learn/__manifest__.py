@@ -20,13 +20,15 @@
 
     # always loaded
     'data': [
-
+        "views/views.xml",
     ],
     # only loaded in demonstration mode
     'assets': {
         'point_of_sale.assets': [
             "odoo_learn/static/src/js/wb_sample.js",
-            "odoo_learn/static/src/xml/wb_sample.xml"
+            "odoo_learn/static/src/js/hide_btn.js",
+            "odoo_learn/static/src/xml/wb_sample.xml",
+            "odoo_learn/static/src/xml/hide_btn.xml",
         ]
     }
 }
