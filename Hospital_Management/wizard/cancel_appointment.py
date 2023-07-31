@@ -13,10 +13,14 @@ class CancelAppointmentWizard(models.TransientModel):
     date_cancel = fields.Date(string="Cancellation Date")
 
     def action_cancel(self):
-        if self.appointment_id.booking_date == fields.Date.today():
-            raise ValidationError(_("Sorry, cancellation is not allowed on the same"))
-        self.appointment_id.state = 'cancel'
-        return
+        cancel_day = self.env['ir.config_parameter'].get_param('Hospital_Management.cancel_day')
+        print("cancel_day", cancel_day)
+
+
+        # if self.appointment_id.booking_date == fields.Date.today():
+        #     raise ValidationError(_("Sorry, cancellation is not allowed on the same"))
+        # self.appointment_id.state = 'cancel'
+        # return
 
     @api.model
     def default_get(self, fields):
