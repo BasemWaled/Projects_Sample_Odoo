@@ -21,6 +21,7 @@ class HospitalAppointment(models.Model):
         [('draft', 'Draft'), ('in_consultation', 'In Consultation'), ('done', 'Done'), ('cancel', 'Cancelled')],
         default='draft', string="Status", required=True, tracking=True)
     doctor_id = fields.Many2one('res.users', string='Doctor', tracking=True)
+    operation_id = fields.Many2one('hospital.operation', string='Operation', tracking=True)
     appointment_pharmacy_ines = fields.One2many('appointment.pharmacy.lines', 'appointment_id', string='Pharmacy Lines')
     hide_sales_price = fields.Boolean(string="Hide Sales Price")
 

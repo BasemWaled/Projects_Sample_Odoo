@@ -21,6 +21,7 @@
              'views/female_view.xml',
              'views/appointment_view.xml',
              'views/patient_tag.xml',
+             'views/operation_view.xml',
              'views/res_config_settings_views.xml',
              'reports/report.xml',
              'reports/patient_card.xml'],

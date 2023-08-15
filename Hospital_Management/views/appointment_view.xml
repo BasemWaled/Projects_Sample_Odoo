@@ -90,6 +90,7 @@
                             <field name="hide_sales_price"
                                    groups="base.group_no_one"/> <!-- groups="base.group_no_one" show only in developer mode-->
                             <field name="booking_date" string="Booking Date"/>
+                            <field name="operation_id"/>
                             <field name="description"/>
                             <button name="action_test" string="Object Button" type="object"
                                     confirm="Are you sure to execute python code ?" class="oe_highlight"

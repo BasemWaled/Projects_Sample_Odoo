@@ -1,8 +1,10 @@
 import datetime
+from datetime import date
+
+from dateutil import relativedelta
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
-from datetime import date
-from dateutil import relativedelta
+
 
 class CancelAppointmentWizard(models.TransientModel):
     _name = 'cancel.appointment.wizard'
