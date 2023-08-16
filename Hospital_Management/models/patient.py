@@ -1,7 +1,8 @@
 from datetime import date
+
+from dateutil import relativedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from dateutil import relativedelta
 
 
 class HospitalPatient(models.Model):
@@ -12,7 +13,8 @@ class HospitalPatient(models.Model):
     name = fields.Char(string='Name', tracking=True)
     date_of_birth = fields.Date(string='Date of Birth')
     mobile = fields.Char(string='Mobile', tracking=True, size=11)
-    age = fields.Integer(string='Age', compute='_compute_age', inverse='_inverse_compute_age', search='_search_age', tracking=True)
+    age = fields.Integer(string='Age', compute='_compute_age', inverse='_inverse_compute_age', search='_search_age',
+                         tracking=True)
     gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string="Gender", tracking=True,
                               default='female')
     description = fields.Text(string='Description', tracking=True)
@@ -125,3 +127,12 @@ class SaleOrder(models.Model):
         super(SaleOrder, self).action_confirm()
         print("Success..........")
         self.confirmed_user_id = self.env.user.id
+
+
+class ResGroups(models.Model):
+    _inherit = 'res.groups'
+
+    def get_application_groups(self, domain):
+        group_id = self.env.ref('base.group_allow_export').id
+        private_group_id = self.env.ref('base.group_private_addresses').id
+        return super(ResGroups, self).get_application_groups(domain + [('id', 'not in', (group_id, private_group_id))])
