@@ -29,7 +29,6 @@
                 <header>
                     <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"/>
                 </header>
-                <field name="name"/>
                 <field name="patient_id" string="Patient Name"/>
                 <field name="ref"/>
                 <field name="doctor_id"/>
@@ -79,9 +78,6 @@
                 </header>
                 <sheet>
                     <div>
-                        <h1>
-                            <field name="name"/>
-                        </h1>
                         <h1>
                             <field name="priority" widget="priority"/>
                         </h1>
