@@ -6,12 +6,15 @@ class HospitalAppointment(models.Model):
     _name = "hospital.appointment"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Hospital Appointment"
-    _rec_name = 'patient_id'
+    # _rec_name = 'patient_id'
+    _rec_name = 'name'
+    _order = 'id desc'
 
-    patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='restrict')
-    # patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='cascade')
+    name = fields.Char(string='Sequence', default='new')
+    # patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='restrict')
+    patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='cascade')
     gender = fields.Selection(related='patient_id.gender', readonly=False)
-    ref = fields.Char(string='reference')
+    ref = fields.Char(related='patient_id.ref', string='reference')
     appointment_time = fields.Datetime(string='Appointment Time', default=fields.Datetime.now)
     booking_date = fields.Date(string='Booking Date', default=fields.Date.context_today)
     description = fields.Text(string='Description', help="Description of the patient from patient record")

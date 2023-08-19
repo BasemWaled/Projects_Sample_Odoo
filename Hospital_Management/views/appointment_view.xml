@@ -30,6 +30,8 @@
                     <button name="action_in_consultation" string="In Consultation" class="oe_highlight" type="object"/>
                 </header>
                 <field name="patient_id" string="Patient Name"/>
+                <field name="ref"/>
+                <field name="doctor_id"/>
                 <field name="appointment_time" string="Appointment Time"/>
                 <field name="booking_date" string="Booking Date"/>
                 <field name="state" widget="badge" decoration-success="state== 'done'"
@@ -37,10 +39,12 @@
                        decoration-danger="state == 'cancel'"
                        decoration-warning="state == 'in_consultation'"
                 />
-                <button name="action_done" attrs="{'invisible':[('state','!=', 'in_consultation')]}" class="fa fa-check btn-success" type="object"/>
-                <button name="%(Hospital_Management.action_cancel_appointment)d" class="fa fa-times btn-danger" type="action"
-                            context="{'hide_appointment': 1}"
-                            attrs="{'invisible':[('state','not in', ('draft', 'in_consultation'))]}"/>
+                <button name="action_done" attrs="{'invisible':[('state','!=', 'in_consultation')]}"
+                        class="fa fa-check btn-success" type="object"/>
+                <button name="%(Hospital_Management.action_cancel_appointment)d" class="fa fa-times btn-danger"
+                        type="action"
+                        context="{'hide_appointment': 1}"
+                        attrs="{'invisible':[('state','not in', ('draft', 'in_consultation'))]}"/>
                 <groupby name="patient_id">
                     <button name="action_test1" string="Click Me" type="object" class="oe_highlight"/>
                     <button name="edit" string="Edit" type="edit" class="oe_highlight"/>
