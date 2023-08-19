@@ -10,7 +10,7 @@ class HospitalAppointment(models.Model):
     _rec_name = 'name'
     _order = 'id desc'
 
-    name = fields.Char(string='Sequence', default='new')
+    name = fields.Char(string='Sequence', default='new', readonly=True)
     # patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='restrict')
     patient_id = fields.Many2one('hospital.patient', string='patient', ondelete='cascade')
     gender = fields.Selection(related='patient_id.gender', readonly=False)
@@ -27,6 +27,16 @@ class HospitalAppointment(models.Model):
     operation_id = fields.Many2one('hospital.operation', string='Operation', tracking=True)
     appointment_pharmacy_ines = fields.One2many('appointment.pharmacy.lines', 'appointment_id', string='Pharmacy Lines')
     hide_sales_price = fields.Boolean(string="Hide Sales Price")
+
+    @api.model
+    def create(self, vals):
+        vals['name'] = self.env['ir.sequence'].next_by_code('hospital.appointment')
+        return super(HospitalAppointment, self).create(vals)
+
+    def write(self, vals):
+        if not self.name and not vals.get('name'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('hospital.appointment')
+        return super(HospitalAppointment, self).write(vals)
 
     @api.onchange('patient_id')
     def onchange_patient_id(self):
