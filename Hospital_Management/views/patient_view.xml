@@ -8,7 +8,8 @@
                 <field name="name" string="Patient Name"/>
                 <field name="mobile"/>
                 <field name="description"/>
-                <field name="age"/>
+                <field name="age" avg="Average Age"/>
+                <field name="appointment_count" sum="Total Appointment"/>
                 <field name="gender"/>
             </tree>
         </field>
