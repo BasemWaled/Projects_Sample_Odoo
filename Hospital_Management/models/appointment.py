@@ -6,8 +6,8 @@ class HospitalAppointment(models.Model):
     _name = "hospital.appointment"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Hospital Appointment"
-    # _rec_name = 'patient_id'
-    _rec_name = 'name'
+    _rec_name = 'patient_id'
+    #_rec_name = 'name'
     _order = 'id desc'
 
     name = fields.Char(string='Sequence', default='new', readonly=True)
