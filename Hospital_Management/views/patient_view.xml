@@ -63,6 +63,11 @@
                             <field name="partner_name" attrs="{'readonly':[('marital_states', '!=', 'married')],
                              'required': [('marital_states', '=', 'married')]}"/>
                         </group>
+                        <group>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="website" widget="url"/>
+                        </group>
                     </group>
                 </sheet>
                 <!-- chatter_position -->
