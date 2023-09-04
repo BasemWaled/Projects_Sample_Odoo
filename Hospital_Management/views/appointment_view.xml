@@ -9,8 +9,8 @@
         <field name="state">code</field>
         <field name="code">
             for rec in records:
-            if rec.state == 'in_consultation':
-            rec.action_done()
+                if rec.state == 'in_consultation':
+                    rec.action_done()
         </field>
     </record>
 
