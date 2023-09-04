@@ -9,8 +9,8 @@
         <field name="state">code</field>
         <field name="code">
             for rec in records:
-                if rec.state == 'in_consultation':
-                    rec.action_done()
+            if rec.state == 'in_consultation':
+            rec.action_done()
         </field>
     </record>
 
@@ -34,11 +34,14 @@
         </field>
     </record>
 
+    <!-- points to discuss: date_start,date_stop,date_delay,color,form_view_id,event_open_popup, -->
+    <!-- quick_add,mode,avatar_field,filter,hide_time,event_limit -->
+
     <record id="view_hospital_appointment_calendar" model="ir.ui.view">
         <field name="name">hospital.appointment.calendar</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
-            <calendar string="Appointments" date_start="booking_date" mode="month">
+            <calendar string="Appointments" date_start="booking_date" mode="month" date_delay="duration">
                 <field name="patient_id"/>
             </calendar>
         </field>
@@ -113,6 +116,7 @@
                             <field name="ref"/>
                             <field name="gender"/>
                             <field name="doctor_id"/>
+                            <field name="duration"/>
                             <field name="appointment_time" string="Appointment Time"/>
                         </group>
                         <group>
