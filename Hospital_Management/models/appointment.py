@@ -31,7 +31,6 @@ class HospitalAppointment(models.Model):
     progress = fields.Integer('Progress', compute='_compute_progress')
     duration = fields.Float("Duration")
 
-
     @api.model
     def create(self, vals):
         vals['name'] = self.env['ir.sequence'].next_by_code('hospital.appointment')
