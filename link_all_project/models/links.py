@@ -24,13 +24,60 @@ class LinkSystem(models.Model):
         return super(LinkSystem, self).search(args, offset, limit, order, count)
 
 
+# class LinkProject(models.Model):
+#     _inherit = 'project.project'
+#
+#     user_access_ids = fields.Many2many('res.users', string='Project Employee', tracking=True)
+#
+#     @api.model
+#     def search(self, args, offset=0, limit=None, order=None, count=False):
+#         if not self.env.user.has_group('project.group_project_manager'):
+#             args += [('user_access_ids', 'in', self.env.user.id)]
+#         return super(LinkProject, self).search(args, offset, limit, order, count)
+
+
 class LinkProject(models.Model):
     _inherit = 'project.project'
 
-    user_access_ids = fields.Many2many('res.users', string='Project Employee', tracking=True)
+    user_access_ids = fields.Many2many('res.users', 'project_project_user_rel', 'project_id', 'user_id',
+                                       string='Project Employees', tracking=True)
 
     @api.model
     def search(self, args, offset=0, limit=None, order=None, count=False):
-        if not self.env.user.has_group('project.group_project_manager'):
-            args += [('user_access_ids', 'in', self.env.user.id)]
+        # If the user is not an administrator and not a project manager
+        if not self.env.user.has_group('base.group_system') and not self.env.user.has_group(
+                'project.group_project_manager'):
+            # Then restrict the projects to those in the user's project_access_ids field
+            args += [('id', 'in', self.env.user.project_access_ids.ids)]
         return super(LinkProject, self).search(args, offset, limit, order, count)
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    project_access_ids = fields.Many2many('project.project', 'project_project_user_rel', 'user_id', 'project_id',
+                                          string='Accessible Projects')
+
+# class LinkProject(models.Model):
+#     _inherit = 'project.project'
+#
+#     user_access_ids = fields.Many2many('res.users', 'project_project_user_rel', 'project_id', 'user_id',
+#                                        string='Project Employees', tracking=True)
+#
+#     @api.model
+#     def search(self, args, offset=0, limit=None, order=None, count=False):
+#         if not self.env.user.has_group('project.group_project_manager'):
+#             args += [('user_access_ids', 'in', self.env.user.id)]
+#         return super(LinkProject, self).search(args, offset, limit, order, count)
+#     @api.model
+#     def search(self, args, offset=0, limit=None, order=None, count=False):
+#         if not self.env.user.has_group('project.group_project_manager') and self.env.user.has_group('base.group_user'):
+#             args += [('user_access_ids', 'in', self.env.user.id)]
+#         return super(LinkProject, self).search(args, offset, limit, order, count)
+#
+#
+# class ResUsers(models.Model):
+#     _inherit = 'res.users'
+#
+#     project_access_ids = fields.Many2many('project.project', 'project_project_user_rel', 'user_id', 'project_id',
+#                                           string='Accessible Projects')

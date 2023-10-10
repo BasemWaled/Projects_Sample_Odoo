@@ -13,7 +13,8 @@
     'data': [
             'security/ir.model.access.csv',
             'views/links_view.xml',
-            'views/project_view.xml'],
+            'views/project_view.xml',
+        ],
     'demo': [],
     'application': True,
     'installable': True,
