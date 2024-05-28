@@ -1,26 +1,86 @@
-from odoo import http
-from odoo.http import request, Response
+import json
+import math
+import logging
+import requests
+from odoo import http, _, exceptions
+from odoo.http import request
+
+_logger = logging.getLogger(__name__)
 
 
-class ApiController(http.Controller):
+class OdooAPI(http.Controller):
+    @http.route('/auth/', type='json', auth='none', methods=["POST"], csrf=False)
+    def authenticate(self, *args, **post):
+        try:
+            login = post.get("login")
+            password = post.get("password")
+            db = post.get("db")
+        except KeyError as e:
+            error_msg = f"`{e.args[0]}` is required."
+            _logger.error(error_msg)
+            return self.error_response(exceptions.AccessDenied(), error_msg)
 
-    @http.route('/api/auth/login', type='json', auth='none', methods=['POST'], csrf=False)
-    def authenticate(self, **kwargs):
-        db = kwargs.get('db')
-        login = kwargs.get('login')
-        password = kwargs.get('password')
+        try:
+            request.session.authenticate(db, login, password)
+            res = self.session_info()
+            return res
+        except exceptions.AccessDenied as e:
+            _logger.error(str(e))
+            return self.error_response(e, str(e))
+        except Exception as e:
+            _logger.exception("An error occurred during authentication.")
+            return self.error_response(e, "An error occurred during authentication.")
 
-        if not db or not login or not password:
-            return Response("Missing dbname, login, or password", status=400)
-
-        uid = request.session.authenticate(db, login, password)
-        if uid:
-            user = request.env['res.users'].sudo().browse(uid)
-            return {
-                'uid': uid,
-                'email': user.email,
-                'name': user.name,
-                'session_id': request.session.sid,
+    @staticmethod
+    def error_response(error, msg):
+        return {
+            "jsonrpc": "2.0",
+            "id": None,
+            "error": {
+                "code": 200,
+                "message": msg,
+                "data": {
+                    "name": str(error),
+                    "debug": "",
+                    "message": msg,
+                    "arguments": list(error.args),
+                    "exception_type": type(error).__name__
+                }
             }
-        else:
-            return Response("Invalid login or password", status=401)
+        }
+
+    @staticmethod
+    def session_info():
+        return {
+            "jsonrpc": "2.0",
+            "id": None,
+            "result": {
+                "session_id": request.session.sid,
+                "uid": request.session.uid,
+                "username": request.env.user.name,
+                "db": request.env.cr.dbname,
+            }
+        }
+
+    @http.route('/get/pro', type='json', auth='user', methods=["GET"], csrf=False)
+    def get_products(self, **kwargs):
+        try:
+            Product = request.env['product.product']
+            products = Product.search([])
+            product_list = []
+            for product in products:
+                product_info = {
+                    "id": product.id,
+                    "name": product.name,
+                    "internal_reference": product.default_code,
+                    "sales_price": product.lst_price,
+                }
+                product_list.append(product_info)
+            return {
+                "jsonrpc": "2.0",
+                "id": None,
+                "result": product_list
+            }
+        except Exception as e:
+            _logger.exception("An error occurred while fetching products.")
+            return self.error_response(e, "An error occurred while fetching products.")
