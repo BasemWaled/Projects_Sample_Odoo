@@ -9,8 +9,8 @@
         <field name="state">code</field>
         <field name="code">
             for rec in records:
-            if rec.state == 'in_consultation':
-            rec.action_done()
+                if rec.state == 'in_consultation':
+                    rec.action_done()
         </field>
     </record>
 
@@ -31,22 +31,6 @@
                     </div>
                 </templates>
             </activity>
-        </field>
-    </record>
-
-    <!-- points to discuss: date_start,date_stop,date_delay,color,form_view_id,event_open_popup, -->
-    <!-- quick_add,mode,avatar_field,filter,hide_time,event_limit -->
-    <record id="view_hospital_appointment_calendar" model="ir.ui.view">
-        <field name="name">hospital.appointment.calendar</field>
-        <field name="model">hospital.appointment</field>
-        <field name="arch" type="xml">
-            <calendar string="Appointments" date_start="booking_date" mode="month" date_delay="duration"
-                      color="patient_id"
-                      hide_time="True" event_open_popup="True"
-                      form_view_id="%(Hospital_Management.view_hospital_appointment_form)d" event_limit="5">
-                <field name="patient_id" filters="1" avatar_field="image"/>
-                <field name="state" invisible="1" filters="1"/>
-            </calendar>
         </field>
     </record>
 
@@ -175,6 +159,23 @@
             </form>
         </field>
     </record>
+
+    <!-- points to discuss: date_start,date_stop,date_delay,color,form_view_id,event_open_popup, -->
+    <!-- quick_add,mode,avatar_field,filter,hide_time,event_limit -->
+    <record id="view_hospital_appointment_calendar" model="ir.ui.view">
+        <field name="name">hospital.appointment.calendar</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointments" date_start="booking_date" mode="month" date_delay="duration"
+                      color="patient_id"
+                      hide_time="True" event_open_popup="True"
+                      form_view_id="%(Hospital_Management.view_hospital_appointment_form)d" event_limit="5">
+                <field name="patient_id" filters="1" avatar_field="image"/>
+                <field name="state" invisible="1" filters="1"/>
+            </calendar>
+        </field>
+    </record>
+
 
     <record id="view_hospital_appointment_search" model="ir.ui.view">
         <field name="name">hospital.appointment.search</field>
