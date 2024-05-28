@@ -1,4 +1,4 @@
-POST : 127.0.0.1:8015/api/auth/login
+POST : 127.0.0.1:8015/auth/
 {
     "jsonrpc": "2.0",
     "params": {
@@ -6,4 +6,10 @@ POST : 127.0.0.1:8015/api/auth/login
         "login": "admin",
         "password": "admin"
     }
+}
+
+GET : 127.0.0.1:8015/get/pro
+{
+    "jsonrpc": "2.0",
+    "params": {}
 }
